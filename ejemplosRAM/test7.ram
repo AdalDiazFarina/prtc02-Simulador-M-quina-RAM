@@ -37,4 +37,4 @@ carga:	load *2
 			
 				jump carga
 
-fin2: 	halt
+fin2:		halt

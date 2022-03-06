@@ -49,7 +49,6 @@ void ReadData::LinesToInstruction(std::vector<std::string> data) {
   std::vector<Instruction*> instructions;
   for (std::string line : data) {
     transform_data = Split(line, " ");
-    std::cout << "\n";
     instructions.push_back(ConvertIntoInstruction(transform_data));
   }
   _memory_program = MemoryProgram(instructions);
@@ -85,10 +84,8 @@ std::vector<std::string> ReadData::Split(std::string str, std::string delimiter)
 Instruction* ReadData::ConvertIntoInstruction(std::vector<std::string> instruction) {
   std::string label, name, operand;
   Instruction* new_instruction = new Instruction();
-  std::cout << instruction[1];
   if (instruction.size() == 2) {
     if (instruction[1] == "HALT" || instruction[1] == "halt") {
-      std::cout << "ENTRE\n";
       label = instruction[0];
       name = instruction[1];
       operand = "";
@@ -114,6 +111,6 @@ Instruction* ReadData::ConvertIntoInstruction(std::vector<std::string> instructi
   if (name == "JZERO" || name == "jzero") new_instruction = new Jzero(label, name, operand);
   if (name == "JGTZ" || name == "jgtz") new_instruction = new Jgtz(label, name, operand);
   if (name == "HALT" || name == "halt") new_instruction = new Halt(label, name, operand);
-  // std::cout << *(new_instruction);
+  std::cout << *(new_instruction);
   return new_instruction;
 }

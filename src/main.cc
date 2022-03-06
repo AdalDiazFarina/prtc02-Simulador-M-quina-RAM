@@ -23,8 +23,8 @@ void Help() {
 // Main program
 int main(int argc, char *argv[]) {
   if (argc == 1) Help();
-
   if (argc == 4) {
+    std::cout << tape << std::endl;
     ReadData read_data(argv[1]);
   } else {
     std::cout << "Error. Expected: 4, Received: " << argc << "\n";
