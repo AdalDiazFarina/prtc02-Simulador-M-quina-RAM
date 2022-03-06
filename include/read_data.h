@@ -13,15 +13,15 @@
 #pragma once
 #include <iostream>
 #include <vector>
-#include "memory_program.h"
+#include "program_memory.h"
 
 /**
 * @brief ReadData This class read the input files and structure the data according to the program design
-* @param _memory_program [MemoryProgram] This class contain all the instruction
+* @param _program_memory [ProgramMemory] This class contain all the instruction
 */
 class ReadData {
   private:
-    MemoryProgram _memory_program;
+    ProgramMemory _program_memory;
   public:
     // Default constructor
     ReadData();

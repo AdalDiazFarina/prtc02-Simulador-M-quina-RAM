@@ -7,13 +7,13 @@
  * @author Adal Díaz Fariña
  * @since Mar 4 2022
  * @desc Program memory
- *	    This file contain the definitions of MemoryProgram methods
+ *	    This file contain the definitions of ProgramMemory methods
  */
 
-#include "../include/memory_program.h"
+#include "../include/program_memory.h"
 
 // Default constructor
-MemoryProgram::MemoryProgram() {
+ProgramMemory::ProgramMemory() {
   _pointer = 0;
 }
 
@@ -21,13 +21,13 @@ MemoryProgram::MemoryProgram() {
 * @brief Construct a new Memory Program object
 * @param instructions The list of the instructions
 */
-MemoryProgram::MemoryProgram(std::vector<Instruction*> instructions) {
+ProgramMemory::ProgramMemory(std::vector<Instruction*> instructions) {
   _pointer = 0;
   _instructions = instructions;
 }
 
 // Destructor
-MemoryProgram::~MemoryProgram() {
+ProgramMemory::~ProgramMemory() {
   _instructions.clear();
 }
 
@@ -35,6 +35,6 @@ MemoryProgram::~MemoryProgram() {
 * @brief Get the Next Instruction object
 * @return [Instruction] 
 */
-Instruction* MemoryProgram::GetNextInstruction() {
+Instruction* ProgramMemory::GetNextInstruction() {
   return _instructions[_pointer];
 }

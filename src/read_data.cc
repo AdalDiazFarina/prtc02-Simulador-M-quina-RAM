@@ -51,7 +51,7 @@ void ReadData::LinesToInstruction(std::vector<std::string> data) {
     transform_data = Split(line, " ");
     instructions.push_back(ConvertIntoInstruction(transform_data));
   }
-  _memory_program = MemoryProgram(instructions);
+  _program_memory = MemoryProgram(instructions);
 }
 
 /**

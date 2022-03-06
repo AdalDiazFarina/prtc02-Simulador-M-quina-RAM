@@ -5,10 +5,10 @@ CFLAGS= -std=c++11 -Wall
 ## subdirectory with the files. o
 ODIR=obj
 
-_DEPS = read_data.h instruction.h memory_program.h tape.h
+_DEPS = read_data.h instruction.h memory_program.h tape.h input_unit.h output_unit.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = main.o read_data.o instruction.o memory_program.o tape.o
+_OBJ = main.o read_data.o instruction.o memory_program.o tape.o input_unit.o output_unit.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 

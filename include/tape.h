@@ -21,7 +21,7 @@
  * @param _pos [int] Contain the position of head tape 
  */
 class Tape {
-  private:
+  protected:
     std::vector<int> _tape;
     int _pos;
   public:

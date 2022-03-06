@@ -7,7 +7,7 @@
  * @author Adal Díaz Fariña
  * @since Mar 4 2022
  * @desc Memory Program
- *			 This file contain the declaration of MemoryProgram methods
+ *			 This file contain the declaration of ProgramMemory methods
  */
 
 #pragma once
@@ -20,20 +20,20 @@
  * @param _pointer [int] This parameter allow us to know how is the following instruction
  * @param _instruction [vector<Instruction>] The list of the instructions
  */
-class MemoryProgram {
+class ProgramMemory {
   private:
     int _pointer;
     std::vector<Instruction*> _instructions;
   public:
     // Default constructor
-    MemoryProgram();
+    ProgramMemory();
     /**
      * @brief Construct a new Memory Program object
      * @param instructions The list of the instructions
      */
-    MemoryProgram(std::vector<Instruction*> instructions);
+    ProgramMemory(std::vector<Instruction*> instructions);
     // Destructor
-    ~MemoryProgram();
+    ~ProgramMemory();
     /**
      * @brief Get the Next Instruction object
      * @return [Instruction] 
