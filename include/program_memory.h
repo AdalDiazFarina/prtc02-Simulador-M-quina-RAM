@@ -6,7 +6,7 @@
  *
  * @author Adal Díaz Fariña
  * @since Mar 4 2022
- * @desc Memory Program
+ * @desc Program Memory
  *			 This file contain the declaration of ProgramMemory methods
  */
 
