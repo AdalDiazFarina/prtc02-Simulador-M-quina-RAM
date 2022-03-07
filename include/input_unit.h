@@ -18,7 +18,7 @@
 #pragma once
 #include "tape.h"
 
-class InputUnit : public tape {
+class InputUnit : public Tape {
   public: 
     // Default constructor
     InputUnit();
@@ -32,8 +32,7 @@ class InputUnit : public tape {
 
     /**
      * @brief This method read one value of the input tape
-     * @param pos [int] position of the value
      * @return [int] 
      */
-    int Read(int pos);
-}
+    int Read();
+};

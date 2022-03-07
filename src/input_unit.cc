@@ -24,9 +24,8 @@ InputUnit::~InputUnit() {}
 
 /**
 * @brief This method read one value of the input tape
-* @param pos [int] position of the value
 * @return [int] 
 */
-int InputUnit::Read(int pos) {
-  return _tape;
+int InputUnit::Read() {
+  return _tape[_pos++];
 }

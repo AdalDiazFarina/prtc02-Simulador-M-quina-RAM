@@ -76,81 +76,147 @@ void Instruction::Run() {}
 Load::Load(std::string label, std::string name, std::string operand): Instruction(label, name, operand) {}
 Load::~Load() {}
 
-void Load::Run() {}
+void Load::Run(DataMemory* data_memory) {
+  std::string::size_type sz;
+  if (_operand.find("=") != std::string::npos) {
+    data_memory -> SetAcc(stoi(_operand.substr(1, 2)), &sz);
+  } else if (_operand.find("*") != std::string::npos) {
+    data_memory -> SetAcc(data_memory -> GetRegister((data_memory -> GetRegister((stoi(_operand.substr(1, 2), &sz)))));
+  } else {
+    data_memory -> SetAcc(data_memory -> GetRegister(stoi(_operand, &sz)));
+  }
+}
 
 // Store
 Store::Store(std::string label, std::string name, std::string operand): Instruction(label, name, operand) {}
 Store::~Store() {}
 
-void Store::Run() {}
-
+void Store::Run(DataMemory& data_memory) {
+  std::string::size_type sz;
+  if (_operand.find("*") != std::string::npos) {
+    data_memory -> SetRegister(data_memory -> GetRegister((stoi(_operand.substr(1, 2), &sz)), data_memory -> GetAcc());
+  } else {
+    data_memory -> SetRegister((stoi(_operand, &sz)), data_memory -> GetAcc());
+  }
+}
 
 // Add
-
 Add::Add(std::string label, std::string name, std::string operand): Instruction(label, name, operand) {}
 Add::~Add() {}
 
-void Add::Run() {}
+void Add::Run(DataMemory& data_memory) {
+  std::string::size_type sz;
+  if (_operand.find("=") != std::string::npos) {
+    data_memory -> SetAcc(data_memory -> GetAcc() + stoi(_operand.substr(1, 2), &sz));
+  } else if (_operand.find("*") != std::string::npos) {
+    data_memory -> SetAcc(data_memory -> GetAcc() + data_memory -> GetRegister((data_memory -> GetRegister(stoi(_operand.substr(1, 2), &sz)))));
+  } else {
+    data_memory -> SetAcc(data_memory -> GetAcc() + data_memory -> GetRegister(stoi(_operand, &sz)));
+  }
+}
 
 // Sub
-
 Sub::Sub(std::string label, std::string name, std::string operand): Instruction(label, name, operand) {}
 Sub::~Sub() {}
 
-void Sub::Run() {}
+void Sub::Run(DataMemory& data_memory) {
+  std::string::size_type sz;
+  if (_operand.find("=") != std::string::npos) {
+    data_memory -> SetAcc(data_memory -> GetAcc() - stoi(_operand.substr(1, 2), &sz));
+  } else if (_operand.find("*") != std::string::npos) {
+    data_memory -> SetAcc(data_memory -> GetAcc() - data_memory -> GetRegister((data_memory -> GetRegister(stoi(_operand.substr(1, 2), &sz)))));
+  } else {
+    data_memory -> SetAcc(data_memory -> GetAcc() - data_memory -> GetRegister(stoi(_operand, &sz)));
+  }
+}
 
 // Mul
-
 Mul::Mul(std::string label, std::string name, std::string operand): Instruction(label, name, operand) {}
 Mul::~Mul() {}
 
-void Mul::Run() {}
+void Mul::Run(DataMemory& data_memory) {
+  std::string::size_type sz;
+  if (_operand.find("=") != std::string::npos) {
+    data_memory -> SetAcc(data_memory -> GetAcc() * stoi(_operand.substr(1, 2), &sz));
+  } else if (_operand.find("*") != std::string::npos) {
+    data_memory -> SetAcc(data_memory -> GetAcc() * data_memory -> GetRegister((data_memory -> GetRegister(stoi(_operand.substr(1, 2), &sz)))));
+  } else {
+    data_memory -> SetAcc(data_memory -> GetAcc() * data_memory -> GetRegister(stoi(_operand, &sz)));
+  }
+}
 
 // Div
-
 Div::Div(std::string label, std::string name, std::string operand): Instruction(label, name, operand) {}
 Div::~Div() {}
 
-void Div::Run() {}
+void Div::Run(DataMemory& data_memory) {
+  std::string::size_type sz;
+  if (_operand.find("=") != std::string::npos) {
+    data_memory -> SetAcc(data_memory -> GetAcc() / stoi(_operand.substr(1, 2), &sz));
+  } else if (_operand.find("*") != std::string::npos) {
+    data_memory -> SetAcc(data_memory -> GetAcc() / data_memory -> GetRegister((data_memory -> GetRegister(stoi(_operand.substr(1, 2), &sz)))));
+  } else {
+    data_memory -> SetAcc(data_memory -> GetAcc() / data_memory -> GetRegister(stoi(_operand, &sz)));
+  }
+}
 
 // Read
-
 Read::Read(std::string label, std::string name, std::string operand): Instruction(label, name, operand) {}
 Read::~Read() {}
 
-void Read::Run() {}
+void Read::Run(DataMemory& data_memory, InputUnit& input_unit) {
+  std::string::size_type sz;
+  if (_operand.find("*") != std::string::npos) {
+    data_memory -> SetRegister(data_memory -> GetRegister((stoi(_operand.substr(1, 2), &sz))), input_unit.Read());
+  } else {
+    data_memory -> SetRegister(stoi(_operand, &sz), input_unit.Read());
+  }
+}
 
 // Write
-
 Write::Write(std::string label, std::string name, std::string operand): Instruction(label, name, operand) {}
-Write::~Write() {}
+Write::~Write(DataMemory& data_memory, OutputUnit& output_unit) {}
 
-void Write::Run() {}
+void Write::Run() {
+  std::string::size_type sz;
+  if (_operand.find("=") != std::string::npos) {
+    output_unit -> Write(stoi(_operand.substr(1, 2), &sz));
+  } else if (_operand.find("*") != std::string::npos) {
+    output_unit -> Write(data_memory -> GetRegister(data_memory -> GetRegister(stoi(_operand.substr(1, 2), &sz))));
+  } else {
+    output_unit -> Write(data_memory -> GetRegister(stoi(_operand.substr(1, 2), &sz)));
+  }
+}
 
 // Jump
-
 Jump::Jump(std::string label, std::string name, std::string operand): Instruction(label, name, operand) {}
 Jump::~Jump() {}
 
-void Jump::Run() {}
+void Jump::Run(ProgramMemory& program_memory) {
+  std::string::size_type sz;
+  program_memory -> FindLabel(stoi(_operand, &sz));
+}
 
 // Jzero
-
 Jzero::Jzero(std::string label, std::string name, std::string operand): Instruction(label, name, operand) {}
 Jzero::~Jzero() {}
 
-void Jzero::Run() {}
+void Jzero::Run(ProgramMemory& program_memory, DataMemory& data_memory) {
+  if (data_memory -> GetAcc() == 0) program_memory -> FindLabel(stoi(_operand, &sz));
+}
 
 // Jgtz
-
 Jgtz::Jgtz(std::string label, std::string name, std::string operand): Instruction(label, name, operand) {}
 Jgtz::~Jgtz() {}
 
-void Jgtz::Run() {}
+void Jgtz::Run(ProgramMemory& program_memory, DataMemory& data_memory) {
+  if (data_memory -> GetAcc() > 0) program_memory -> FindLabel(stoi(_operand, &sz));
+}
 
 // Halt
-
 Halt::Halt(std::string label, std::string name, std::string operand): Instruction(label, name, operand) {}
 Halt::~Halt() {}
 
-void Halt::Run() {}
+void Halt::Run() {
+  std::cout << "End of the program \n"; 
+}

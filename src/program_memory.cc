@@ -31,10 +31,30 @@ ProgramMemory::~ProgramMemory() {
   _instructions.clear();
 }
 
+
+/**
+* @brief This method update the pointer value
+* @param value [int]
+*/
+void ProgramMemory::SetPointer(int value) {
+  _pointer = value;
+}
+
+/**
+* @brief This method search this label into the _instructions to find the position of the instruction with this label
+* @param label [std::string]
+*/
+void ProgramMemory::FindLabel(std::string label) {
+  for (int i = 0; i < _instructions.size(); i++) {
+    if (_instructions[i].GetLabel() == label) _pointer = i;
+    break;
+  }
+}
+
 /**
 * @brief Get the Next Instruction object
 * @return [Instruction] 
 */
 Instruction* ProgramMemory::GetNextInstruction() {
-  return _instructions[_pointer];
+  return _instructions[_pointer++];
 }

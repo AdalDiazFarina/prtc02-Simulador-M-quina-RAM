@@ -22,7 +22,7 @@ ReadData::ReadData() {}
 ReadData::ReadData(std::string ram_program) {
   std::ifstream program;
   std::string line;
-  std::vector<std::string> data;
+  std::vector<std::string> data; 
   program.open(ram_program);
   if (program.is_open()) {
     while(!program.eof()) {
@@ -51,7 +51,15 @@ void ReadData::LinesToInstruction(std::vector<std::string> data) {
     transform_data = Split(line, " ");
     instructions.push_back(ConvertIntoInstruction(transform_data));
   }
-  _program_memory = MemoryProgram(instructions);
+  _program_memory = new MemoryProgram(instructions);
+}
+
+/**
+* @brief Get the Program Memory object
+* @return [ProgramMemory] 
+*/
+ProgramMemory ReadData::GetProgramMemory() {
+  return _program_memory;
 }
 
 /**

@@ -34,6 +34,17 @@ class ProgramMemory {
     ProgramMemory(std::vector<Instruction*> instructions);
     // Destructor
     ~ProgramMemory();
+
+    /**
+     * @brief This method update the pointer value
+     * @param value [int]
+     */
+    void SetPointer(int value);
+    /**
+     * @brief This method search this label into the _instructions to find the position of the instruction with this label
+     * @param label [std::string]
+     */
+    void FindLabel(std::string label);
     /**
      * @brief Get the Next Instruction object
      * @return [Instruction] 

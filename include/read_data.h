@@ -21,7 +21,7 @@
 */
 class ReadData {
   private:
-    ProgramMemory _program_memory;
+    ProgramMemory* _program_memory;
   public:
     // Default constructor
     ReadData();
@@ -32,6 +32,12 @@ class ReadData {
     ReadData(std::string ram_program);
     // Destructor
     ~ReadData();
+
+    /**
+     * @brief Get the Program Memory object
+     * @return [ProgramMemory] 
+     */
+    ProgramMemory GetProgramMemory();
 
   private:
     /**

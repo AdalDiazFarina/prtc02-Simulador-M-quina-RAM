@@ -58,3 +58,14 @@ void DataMemory::SetRegister(int pos, int value) {
   _registers[pos] = value;
 }
 
+/**
+* @brief This method search one register in the list
+* @param number [int] Number of the register
+* @return [int] 
+*/
+int DataMemory::FindRegister(int number) {
+  for (int i = 0; i < _registers.size(); i++) {
+    if (_registers[i] == number) return i;
+  }
+  return -1;
+}

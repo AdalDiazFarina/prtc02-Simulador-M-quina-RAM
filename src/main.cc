@@ -11,6 +11,8 @@
 */
 
 #include "../include/read_data.h"
+#include "../include/control_unit.h"
+#include <fstream>
 
 // User guide
 void Help() {
@@ -20,12 +22,49 @@ void Help() {
   std::cout << "output_tape.out: file with the contents of the output tape \n";
 }
 
+// Create the input unit
+InputUnit CreateInputUnit(std::string file) {
+  std::string::size_type sz;
+  std::ifstream input;
+  InputUnit input_unit;
+  std::string line;
+  std::vector<int> input_data;
+  input.open(file);
+  if (input.is_open()) {
+    while(!input.eof()) {
+      getline(input, line);
+      input_data.push_back(stoi(line, &sz));
+    }
+    InputUnit input_unit(input_data);
+  } else {
+    throw "Error. The file can`t be opened";
+  }
+  return input_unit;
+}
+
 // Main program
 int main(int argc, char *argv[]) {
   if (argc == 1) Help();
   if (argc == 4) {
-    std::cout << tape << std::endl;
+    // Program memory
+
     ReadData read_data(argv[1]);
+    ProgramMemory program_memory = read_data.GetProgramMemory();
+
+    // Data memory 
+    DataMemory data_memory();
+
+    // Output unit
+    OutputUnit output_unit(
+      
+      argv[3]);
+
+    // Input unit
+    InputUnit input_unit = CreateInputUnit(argv[2]);
+
+    // Control unit
+    ControlUnit control_unit(input_unit, output_unit, data_memory, program_memory);
+    control_unit.Simulation();
   } else {
     std::cout << "Error. Expected: 4, Received: " << argc << "\n";
     return 0;

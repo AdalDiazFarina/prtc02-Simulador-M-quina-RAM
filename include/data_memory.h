@@ -23,7 +23,7 @@ class DataMemory {
   private:
     int _acc;
     std::vector<int> _registers;
-  prublic:
+  public:
     // Default contructor
     DataMemory();
     // Destructor 
@@ -52,4 +52,11 @@ class DataMemory {
      * @param value [int]
      */
     void SetRegister(int pos, int value); 
+
+    /**
+     * @brief This method search one register in the list
+     * @param number [int] Number of the register
+     * @return [int] 
+     */
+    int FindRegister(int number);
 };

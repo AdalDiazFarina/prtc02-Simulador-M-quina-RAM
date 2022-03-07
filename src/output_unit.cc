@@ -12,9 +12,11 @@
 
 #include "../include/output_tape.h"
 
-// Default constructor
-OutputUnit::OutputUnit(std::ofstream output_file) {
-  _output_file = output_file;
+// Constructor
+OutputUnit::OutputUnit(std::string output_file) {
+  std::ofstream output;
+  output.open(output_file);
+  _output_file = output;
   Tape();
 }
 
@@ -27,6 +29,7 @@ OutputUnit::~OutputUnit() {}
 */
 void OutputUnit::Write(int value) {
   _tape.push_back(value);
+  ++_pos;
 }
 
 /**

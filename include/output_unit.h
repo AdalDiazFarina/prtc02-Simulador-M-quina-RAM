@@ -17,12 +17,12 @@
  * @brief This class represent the output unit. Output unit is in charge of manage the output data 
  * 
  */
-class OutputUnit : public tape {
+class OutputUnit : public Tape {
   private:
     std::ofstream _output_file;
   public: 
-    // Default constructor
-    OutputUnit();
+    // Constructor
+    OutputUnit(std::string output_file);
     // Destructor
     ~OutputUnit();
     /**
@@ -34,4 +34,4 @@ class OutputUnit : public tape {
      * @brief This method write the output tape in a file
      */
     void WriteInFile();
-}
+};
