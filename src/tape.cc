@@ -13,7 +13,10 @@
 #include "../include/tape.h"
 
 // Default constructor
-Tape::Tape(): _pos(0) {}
+Tape::Tape() {
+  _pos = 0;
+  _tape = {};
+}
 
 /**
  * @brief Construct a new Tape object

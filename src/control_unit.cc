@@ -39,21 +39,11 @@ void ControlUnit::Simulation() {
   Instruction* instruction = new Instruction();
   std::string name;
   while(true) {
-    instruction = _program_memory -> GetNextInstruction();
-    name = instruction -> GetOperand();
-    if (name == "LOAD" || name == "load") instruction.Run(DataMemory* data_memory);
-    if (name == "STORE" || name == "store") instruction.Run();
-    if (name == "ADD" || name == "add") instruction.Run();
-    if (name == "SUB" || name == "sub") instruction.Run();
-    if (name == "MUL" || name == "mul") instruction.Run();
-    if (name == "DIV" || name == "div") instruction.Run();
-    if (name == "READ" || name == "read") instruction.Run();
-    if (name == "WRITE" || name == "write") instruction.Run();
-    if (name == "JUMP" || name == "jump") instruction.Run();
-    if (name == "JZERO" || name == "jzero") instruction.Run();
-    if (name == "JGTZ" || name == "jgtz") instruction.Run();
-    if (name == "HALT" || name == "halt") {
-      instruction.Run(); 
+    instruction = _program_memory.GetNextInstruction();
+    name = instruction -> GetOperator();
+    instruction -> Run(_data_memory, _input_unit, _output_unit, _program_memory);
+    if (name == "halt" || name == "HALT") {
+      _output_unit.WriteInFile();
       break;
     }
   }

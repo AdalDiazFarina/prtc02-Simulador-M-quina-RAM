@@ -18,6 +18,7 @@
 #include "data_memory.h"
 #include "program_memory.h"
 
+class ProgramMemory;
 /*
 * This class represent an instruction. Is the base class
 * @param label {String} label to jump into this instruction
@@ -66,7 +67,7 @@ class Instruction {
     */
     friend std::ostream& operator<<(std::ostream& os, Instruction& instruction);
     // This methos is in charge of the instruction's function
-    virtual void Run();
+    virtual void Run(DataMemory& _data_memory, InputUnit& input_unit, OutputUnit& output_unit, ProgramMemory& program_memory);
 };
 
 class Load : public Instruction {
@@ -74,7 +75,7 @@ class Load : public Instruction {
     Load(std::string label, std::string name, std::string operand);
     ~Load();
 
-    void Run(DataMemory& _data_memory);
+  void Run(DataMemory& _data_memory, InputUnit& input_unit, OutputUnit& output_unit, ProgramMemory& program_memory);
 };
 
 class Store : public Instruction {
@@ -82,7 +83,7 @@ class Store : public Instruction {
     Store(std::string label, std::string name, std::string operand);
     ~Store();
 
-    void Run(DataMemory& data_memory);
+  void Run(DataMemory& _data_memory, InputUnit& input_unit, OutputUnit& output_unit, ProgramMemory& program_memory);
 };
 
 class Add : public Instruction {
@@ -90,7 +91,7 @@ class Add : public Instruction {
     Add(std::string label, std::string name, std::string operand);
     ~Add();
 
-    void Run(DataMemory& data_memory);
+    void Run(DataMemory& _data_memory, InputUnit& input_unit, OutputUnit& output_unit, ProgramMemory& program_memory);
 };
 
 class Sub : public Instruction {
@@ -98,7 +99,7 @@ class Sub : public Instruction {
     Sub(std::string label, std::string name, std::string operand);
     ~Sub();
 
-    void Run(DataMemory& data_memory);
+    void Run(DataMemory& _data_memory, InputUnit& input_unit, OutputUnit& output_unit, ProgramMemory& program_memory);
 };
 
 class Mul : public Instruction {
@@ -106,7 +107,7 @@ class Mul : public Instruction {
     Mul(std::string label, std::string name, std::string operand);
     ~Mul();
 
-    void Run(DataMemory& data_memory);
+    void Run(DataMemory& _data_memory, InputUnit& input_unit, OutputUnit& output_unit, ProgramMemory& program_memory);
 };
 
 class Div : public Instruction {
@@ -114,7 +115,7 @@ class Div : public Instruction {
     Div(std::string label, std::string name, std::string operand);
     ~Div();
 
-    void Run(DataMemory& data_memory);
+    void Run(DataMemory& _data_memory, InputUnit& input_unit, OutputUnit& output_unit, ProgramMemory& program_memory);
 };
 
 class Read : public Instruction {
@@ -122,7 +123,7 @@ class Read : public Instruction {
     Read(std::string label, std::string name, std::string operand);
     ~Read();
 
-    void Run(DataMemory& data_memory, InputUnit& input_unit);
+    void Run(DataMemory& _data_memory, InputUnit& input_unit, OutputUnit& output_unit, ProgramMemory& program_memory);
 };
 
 class Write : public Instruction {
@@ -130,7 +131,7 @@ class Write : public Instruction {
     Write(std::string label, std::string name, std::string operand);
     ~Write();
 
-    void Run(DataMemory& data_memory, OutputUnit& output_unit);
+    void Run(DataMemory& _data_memory, InputUnit& input_unit, OutputUnit& output_unit, ProgramMemory& program_memory);
 };
 
 class Jump : public Instruction {
@@ -138,7 +139,7 @@ class Jump : public Instruction {
     Jump(std::string label, std::string name, std::string operand);
     ~Jump();
 
-    void Run(ProgramMemory& program_memory);
+    void Run(DataMemory& _data_memory, InputUnit& input_unit, OutputUnit& output_unit, ProgramMemory& program_memory);
 };
 
 class Jzero : public Instruction {
@@ -146,7 +147,7 @@ class Jzero : public Instruction {
     Jzero(std::string label, std::string name, std::string operand);
     ~Jzero();
 
-    void Run(ProgramMemory& program_memory, DataMemory& data_memory);
+    void Run(DataMemory& _data_memory, InputUnit& input_unit, OutputUnit& output_unit, ProgramMemory& program_memory);
 };
 
 class Jgtz : public Instruction {
@@ -154,7 +155,7 @@ class Jgtz : public Instruction {
     Jgtz(std::string label, std::string name, std::string operand);
     ~Jgtz();
 
-    void Run(ProgramMemory& program_memory, DataMemory& data_memory);
+    void Run(DataMemory& _data_memory, InputUnit& input_unit, OutputUnit& output_unit, ProgramMemory& program_memory);
 };
 
 class Halt : public Instruction {
@@ -162,5 +163,5 @@ class Halt : public Instruction {
     Halt(std::string label, std::string name, std::string operand);
     ~Halt();
 
-    void Run();
+    void Run(DataMemory& _data_memory, InputUnit& input_unit, OutputUnit& output_unit, ProgramMemory& program_memory);
 };

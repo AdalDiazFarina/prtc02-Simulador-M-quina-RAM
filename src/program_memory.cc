@@ -46,8 +46,23 @@ void ProgramMemory::SetPointer(int value) {
 */
 void ProgramMemory::FindLabel(std::string label) {
   for (int i = 0; i < _instructions.size(); i++) {
-    if (_instructions[i].GetLabel() == label) _pointer = i;
-    break;
+    if (_instructions[i] -> GetLabel() == (label + ":")) {
+      _pointer = i;
+      break;
+    }
+  }
+}
+
+/**
+* @brief This method change the pointer to the halt instruction position
+* 
+*/
+void ProgramMemory::HaltPosition() {
+  for(int i = 0; i < _instructions.size(); i++) {
+    if (_instructions[i] -> GetOperator() == "HALT" || _instructions[i] -> GetOperator() == "halt") {
+      _pointer = i;
+      break;
+    }
   }
 }
 

@@ -51,7 +51,7 @@ void ReadData::LinesToInstruction(std::vector<std::string> data) {
     transform_data = Split(line, " ");
     instructions.push_back(ConvertIntoInstruction(transform_data));
   }
-  _program_memory = new MemoryProgram(instructions);
+  _program_memory = new ProgramMemory(instructions);
 }
 
 /**
@@ -59,7 +59,7 @@ void ReadData::LinesToInstruction(std::vector<std::string> data) {
 * @return [ProgramMemory] 
 */
 ProgramMemory ReadData::GetProgramMemory() {
-  return _program_memory;
+  return *(_program_memory);
 }
 
 /**
@@ -75,7 +75,7 @@ std::vector<std::string> ReadData::Split(std::string str, std::string delimiter)
   if (str.find("\t") != std::string::npos) str.replace(str.begin() + str.find("\t"), str.begin() + str.find("\t") + 1, " ");
   while((pos = str.find(delimiter)) != std::string::npos) {
     element = str.substr(0, pos);
-    element = element.erase(0, element.find_first_not_of(" \t\r\n"));
+    element = element.erase(0, element.find_first_not_of("\t\r\n"));
     array.push_back(element);
     str.erase(0, pos + delimiter.length());
   }
@@ -91,7 +91,6 @@ std::vector<std::string> ReadData::Split(std::string str, std::string delimiter)
  */
 Instruction* ReadData::ConvertIntoInstruction(std::vector<std::string> instruction) {
   std::string label, name, operand;
-  Instruction* new_instruction = new Instruction();
   if (instruction.size() == 2) {
     if (instruction[1] == "HALT" || instruction[1] == "halt") {
       label = instruction[0];
@@ -103,22 +102,20 @@ Instruction* ReadData::ConvertIntoInstruction(std::vector<std::string> instructi
       operand = instruction[1];
     }
   } else if (instruction.size() == 3) {
-    label = instruction[0];  
+    label = instruction[0];
     name = instruction[1];
     operand = instruction[2];
   }
-  if (name == "LOAD" || name == "load") new_instruction = new Load(label, name, operand);
-  if (name == "STORE" || name == "store") new_instruction = new Store(label, name, operand);
-  if (name == "ADD" || name == "add") new_instruction = new Add(label, name, operand);
-  if (name == "SUB" || name == "sub") new_instruction = new Sub(label, name, operand);
-  if (name == "MUL" || name == "mul") new_instruction = new Mul(label, name, operand);
-  if (name == "DIV" || name == "div") new_instruction = new Div(label, name, operand);
-  if (name == "READ" || name == "read") new_instruction = new Read(label, name, operand);
-  if (name == "WRITE" || name == "write") new_instruction = new Write(label, name, operand);
-  if (name == "JUMP" || name == "jump") new_instruction = new Jump(label, name, operand);
-  if (name == "JZERO" || name == "jzero") new_instruction = new Jzero(label, name, operand);
-  if (name == "JGTZ" || name == "jgtz") new_instruction = new Jgtz(label, name, operand);
-  if (name == "HALT" || name == "halt") new_instruction = new Halt(label, name, operand);
-  std::cout << *(new_instruction);
-  return new_instruction;
+  if (name == "LOAD" || name == "load")return new Load(label, name, operand);
+  if (name == "STORE" || name == "store")return new Store(label, name, operand);
+  if (name == "ADD" || name == "add")return new Add(label, name, operand);
+  if (name == "SUB" || name == "sub")return new Sub(label, name, operand);
+  if (name == "MUL" || name == "mul")return new Mul(label, name, operand);
+  if (name == "DIV" || name == "div")return new Div(label, name, operand);
+  if (name == "READ" || name == "read")return new Read(label, name, operand);
+  if (name == "WRITE" || name == "write")return new Write(label, name, operand);
+  if (name == "JUMP" || name == "jump")return new Jump(label, name, operand);
+  if (name == "JZERO" || name == "jzero")return new Jzero(label, name, operand);
+  if (name == "JGTZ" || name == "jgtz")return new Jgtz(label, name, operand);
+  if (name == "HALT" || name == "halt")return new Halt(label, name, operand);
 }

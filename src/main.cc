@@ -22,11 +22,10 @@ void Help() {
   std::cout << "output_tape.out: file with the contents of the output tape \n";
 }
 
-// Create the input unit
-InputUnit CreateInputUnit(std::string file) {
+// Create a vector with the input unit data
+std::vector<int> CreateInputUnitData(std::string file) {
   std::string::size_type sz;
   std::ifstream input;
-  InputUnit input_unit;
   std::string line;
   std::vector<int> input_data;
   input.open(file);
@@ -35,11 +34,10 @@ InputUnit CreateInputUnit(std::string file) {
       getline(input, line);
       input_data.push_back(stoi(line, &sz));
     }
-    InputUnit input_unit(input_data);
   } else {
     throw "Error. The file can`t be opened";
   }
-  return input_unit;
+  return input_data;
 }
 
 // Main program
@@ -52,15 +50,13 @@ int main(int argc, char *argv[]) {
     ProgramMemory program_memory = read_data.GetProgramMemory();
 
     // Data memory 
-    DataMemory data_memory();
+    DataMemory data_memory;
 
     // Output unit
-    OutputUnit output_unit(
-      
-      argv[3]);
+    OutputUnit output_unit(argv[3]);
 
     // Input unit
-    InputUnit input_unit = CreateInputUnit(argv[2]);
+    InputUnit input_unit(CreateInputUnitData(argv[2]));
 
     // Control unit
     ControlUnit control_unit(input_unit, output_unit, data_memory, program_memory);

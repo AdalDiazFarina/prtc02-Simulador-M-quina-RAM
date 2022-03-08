@@ -27,7 +27,7 @@ class Tape {
   public:
     // Default constructor
     Tape();
-    Tape(std::vector<int> tape);
+    Tape(std::vector<int> vector);
     // Destructor
     ~Tape();
     /**

@@ -15,7 +15,7 @@
 // Default contructor
 DataMemory::DataMemory() {
   _acc = 0;
-  _registers = {};
+  _registers.assign(100, 0);
 }
 
 // Destructor 

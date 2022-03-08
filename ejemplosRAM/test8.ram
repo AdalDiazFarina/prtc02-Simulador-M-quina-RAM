@@ -1,0 +1,20 @@
+# n^n
+bucle: READ 1
+LOAD 1
+STORE 2
+STORE 3
+LOAD 3
+SUB =1
+STORE 3
+LOAD 1
+JZERO fin
+mul: LOAD 1
+MUL 2
+STORE 1
+LOAD 3
+SUB =1
+STORE 3
+JGTZ mul
+WRITE 1
+JUMP bucle
+fin: HALT

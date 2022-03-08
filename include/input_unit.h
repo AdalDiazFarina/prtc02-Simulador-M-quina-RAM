@@ -24,9 +24,9 @@ class InputUnit : public Tape {
     InputUnit();
     /**
      * @brief Construct a new Input Unit object
-     * @param tape [Tape]
+     * @param vector [std::vector<int>]
      */
-    InputUnit(std::vector<int> tape);
+    InputUnit(std::vector<int> vector);
     // Destructor
     ~InputUnit();
 

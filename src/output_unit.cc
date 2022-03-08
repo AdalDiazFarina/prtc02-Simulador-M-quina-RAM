@@ -10,13 +10,14 @@
  *			 This file contain the declaration of OutputUnit class methods
  */
 
-#include "../include/output_tape.h"
+#include "../include/output_unit.h"
+
+// Default constructor
+OutputUnit::OutputUnit() {}
 
 // Constructor
 OutputUnit::OutputUnit(std::string output_file) {
-  std::ofstream output;
-  output.open(output_file);
-  _output_file = output;
+  _output_file = output_file;
   Tape();
 }
 
@@ -36,7 +37,9 @@ void OutputUnit::Write(int value) {
 * @brief This method write the output tape in a file
 */
 void OutputUnit::WriteInFile() {
+  std::ofstream output;
+  output.open(_output_file);
   for (int value : _tape) {
-    _output_file << value << "\n";
+    output << value << "\n";
   }
 }

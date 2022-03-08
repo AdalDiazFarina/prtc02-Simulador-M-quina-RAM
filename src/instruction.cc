@@ -70,20 +70,21 @@ std::ostream& operator<<(std::ostream& os, Instruction& instruction) {
 }
 
 // This methos is in charge of the instruction's function
-void Instruction::Run() {}
+void Instruction::Run(DataMemory& data_memory, InputUnit& input_unit, OutputUnit& output_unit, ProgramMemory& program_memory) {}
 
 // Load
 Load::Load(std::string label, std::string name, std::string operand): Instruction(label, name, operand) {}
 Load::~Load() {}
 
-void Load::Run(DataMemory* data_memory) {
+void Load::Run(DataMemory& data_memory, InputUnit& input_unit, OutputUnit& output_unit, ProgramMemory& program_memory) {
+  std::cout << "LOAD \n";
   std::string::size_type sz;
   if (_operand.find("=") != std::string::npos) {
-    data_memory -> SetAcc(stoi(_operand.substr(1, 2)), &sz);
+    data_memory.SetAcc(stoi(_operand.substr(1, 2),  &sz));
   } else if (_operand.find("*") != std::string::npos) {
-    data_memory -> SetAcc(data_memory -> GetRegister((data_memory -> GetRegister((stoi(_operand.substr(1, 2), &sz)))));
+    data_memory.SetAcc(data_memory.GetRegister(data_memory.GetRegister(stoi(_operand.substr(1, 2), &sz))));
   } else {
-    data_memory -> SetAcc(data_memory -> GetRegister(stoi(_operand, &sz)));
+    data_memory.SetAcc(data_memory.GetRegister(stoi(_operand, &sz)));
   }
 }
 
@@ -91,12 +92,16 @@ void Load::Run(DataMemory* data_memory) {
 Store::Store(std::string label, std::string name, std::string operand): Instruction(label, name, operand) {}
 Store::~Store() {}
 
-void Store::Run(DataMemory& data_memory) {
+void Store::Run(DataMemory& data_memory, InputUnit& input_unit, OutputUnit& output_unit, ProgramMemory& program_memory) {
+  std::cout << "STORE \n";
   std::string::size_type sz;
   if (_operand.find("*") != std::string::npos) {
-    data_memory -> SetRegister(data_memory -> GetRegister((stoi(_operand.substr(1, 2), &sz)), data_memory -> GetAcc());
+    data_memory.SetRegister(data_memory.GetRegister(stoi(_operand.substr(1, 2), &sz)), data_memory.GetAcc());
+  } else if (_operand.find("=") != std::string::npos) {
+    std::cout << "Error. The " << _operator << " instruction not working properly \n";
+    program_memory.HaltPosition();
   } else {
-    data_memory -> SetRegister((stoi(_operand, &sz)), data_memory -> GetAcc());
+    data_memory.SetRegister((stoi(_operand, &sz)), data_memory.GetAcc());
   }
 }
 
@@ -104,14 +109,15 @@ void Store::Run(DataMemory& data_memory) {
 Add::Add(std::string label, std::string name, std::string operand): Instruction(label, name, operand) {}
 Add::~Add() {}
 
-void Add::Run(DataMemory& data_memory) {
+void Add::Run(DataMemory& data_memory, InputUnit& input_unit, OutputUnit& output_unit, ProgramMemory& program_memory) {
+  std::cout << "ADD \n";
   std::string::size_type sz;
   if (_operand.find("=") != std::string::npos) {
-    data_memory -> SetAcc(data_memory -> GetAcc() + stoi(_operand.substr(1, 2), &sz));
+    data_memory.SetAcc(data_memory.GetAcc() + stoi(_operand.substr(1, 2), &sz));
   } else if (_operand.find("*") != std::string::npos) {
-    data_memory -> SetAcc(data_memory -> GetAcc() + data_memory -> GetRegister((data_memory -> GetRegister(stoi(_operand.substr(1, 2), &sz)))));
+    data_memory.SetAcc(data_memory.GetAcc() + data_memory.GetRegister((data_memory.GetRegister(stoi(_operand.substr(1, 2), &sz)))));
   } else {
-    data_memory -> SetAcc(data_memory -> GetAcc() + data_memory -> GetRegister(stoi(_operand, &sz)));
+    data_memory.SetAcc(data_memory.GetAcc() + data_memory.GetRegister(stoi(_operand, &sz)));
   }
 }
 
@@ -119,14 +125,15 @@ void Add::Run(DataMemory& data_memory) {
 Sub::Sub(std::string label, std::string name, std::string operand): Instruction(label, name, operand) {}
 Sub::~Sub() {}
 
-void Sub::Run(DataMemory& data_memory) {
+void Sub::Run(DataMemory& data_memory, InputUnit& input_unit, OutputUnit& output_unit, ProgramMemory& program_memory) {
+  std::cout << "SUB \n";
   std::string::size_type sz;
   if (_operand.find("=") != std::string::npos) {
-    data_memory -> SetAcc(data_memory -> GetAcc() - stoi(_operand.substr(1, 2), &sz));
+    data_memory.SetAcc(data_memory.GetAcc() - stoi(_operand.substr(1, 2), &sz));
   } else if (_operand.find("*") != std::string::npos) {
-    data_memory -> SetAcc(data_memory -> GetAcc() - data_memory -> GetRegister((data_memory -> GetRegister(stoi(_operand.substr(1, 2), &sz)))));
+    data_memory.SetAcc(data_memory.GetAcc() - data_memory.GetRegister((data_memory.GetRegister(stoi(_operand.substr(1, 2), &sz)))));
   } else {
-    data_memory -> SetAcc(data_memory -> GetAcc() - data_memory -> GetRegister(stoi(_operand, &sz)));
+    data_memory.SetAcc(data_memory.GetAcc() - data_memory.GetRegister(stoi(_operand, &sz)));
   }
 }
 
@@ -134,14 +141,15 @@ void Sub::Run(DataMemory& data_memory) {
 Mul::Mul(std::string label, std::string name, std::string operand): Instruction(label, name, operand) {}
 Mul::~Mul() {}
 
-void Mul::Run(DataMemory& data_memory) {
+void Mul::Run(DataMemory& data_memory, InputUnit& input_unit, OutputUnit& output_unit, ProgramMemory& program_memory) {
+  std::cout << "MUL \n";
   std::string::size_type sz;
   if (_operand.find("=") != std::string::npos) {
-    data_memory -> SetAcc(data_memory -> GetAcc() * stoi(_operand.substr(1, 2), &sz));
+    data_memory.SetAcc(data_memory.GetAcc() * stoi(_operand.substr(1, 2), &sz));
   } else if (_operand.find("*") != std::string::npos) {
-    data_memory -> SetAcc(data_memory -> GetAcc() * data_memory -> GetRegister((data_memory -> GetRegister(stoi(_operand.substr(1, 2), &sz)))));
+    data_memory.SetAcc(data_memory.GetAcc() * data_memory.GetRegister((data_memory.GetRegister(stoi(_operand.substr(1, 2), &sz)))));
   } else {
-    data_memory -> SetAcc(data_memory -> GetAcc() * data_memory -> GetRegister(stoi(_operand, &sz)));
+    data_memory.SetAcc(data_memory.GetAcc() * data_memory.GetRegister(stoi(_operand, &sz)));
   }
 }
 
@@ -149,14 +157,15 @@ void Mul::Run(DataMemory& data_memory) {
 Div::Div(std::string label, std::string name, std::string operand): Instruction(label, name, operand) {}
 Div::~Div() {}
 
-void Div::Run(DataMemory& data_memory) {
+void Div::Run(DataMemory& data_memory, InputUnit& input_unit, OutputUnit& output_unit, ProgramMemory& program_memory) {
+  std::cout << "DIV \n";
   std::string::size_type sz;
   if (_operand.find("=") != std::string::npos) {
-    data_memory -> SetAcc(data_memory -> GetAcc() / stoi(_operand.substr(1, 2), &sz));
+    data_memory.SetAcc(data_memory.GetAcc() / stoi(_operand.substr(1, 2), &sz));
   } else if (_operand.find("*") != std::string::npos) {
-    data_memory -> SetAcc(data_memory -> GetAcc() / data_memory -> GetRegister((data_memory -> GetRegister(stoi(_operand.substr(1, 2), &sz)))));
+    data_memory.SetAcc(data_memory.GetAcc() / data_memory.GetRegister((data_memory.GetRegister(stoi(_operand.substr(1, 2), &sz)))));
   } else {
-    data_memory -> SetAcc(data_memory -> GetAcc() / data_memory -> GetRegister(stoi(_operand, &sz)));
+    data_memory.SetAcc(data_memory.GetAcc() / data_memory.GetRegister(stoi(_operand, &sz)));
   }
 }
 
@@ -164,27 +173,48 @@ void Div::Run(DataMemory& data_memory) {
 Read::Read(std::string label, std::string name, std::string operand): Instruction(label, name, operand) {}
 Read::~Read() {}
 
-void Read::Run(DataMemory& data_memory, InputUnit& input_unit) {
+void Read::Run(DataMemory& data_memory, InputUnit& input_unit, OutputUnit& output_unit, ProgramMemory& program_memory) {
+  std::cout << "READ \n";
   std::string::size_type sz;
-  if (_operand.find("*") != std::string::npos) {
-    data_memory -> SetRegister(data_memory -> GetRegister((stoi(_operand.substr(1, 2), &sz))), input_unit.Read());
-  } else {
-    data_memory -> SetRegister(stoi(_operand, &sz), input_unit.Read());
+  if (input_unit.GetTape().size() > 0) {
+    if (_operand.find("*") != std::string::npos || _operand.find("=") != std::string::npos) {
+      std::cout << "Error. The " << _operator << " instruction not working properly \n";
+      program_memory.HaltPosition();
+    } 
+    else {
+      data_memory.SetRegister(stoi(_operand, &sz), input_unit.Read());
+    }
   }
 }
 
 // Write
 Write::Write(std::string label, std::string name, std::string operand): Instruction(label, name, operand) {}
-Write::~Write(DataMemory& data_memory, OutputUnit& output_unit) {}
+Write::~Write() {}
 
-void Write::Run() {
+void Write::Run(DataMemory& data_memory, InputUnit& input_unit, OutputUnit& output_unit, ProgramMemory& program_memory) {
+  std::cout << "WRITE \n";
   std::string::size_type sz;
   if (_operand.find("=") != std::string::npos) {
-    output_unit -> Write(stoi(_operand.substr(1, 2), &sz));
+    if (stoi(_operand.substr(1, 2), &sz) > 0) {
+      output_unit.Write(stoi(_operand.substr(1, 2), &sz));
+    } else {
+      std::cout << "Error. The " << _operator << " instruction not working properly \n";
+      program_memory.HaltPosition();
+    }
   } else if (_operand.find("*") != std::string::npos) {
-    output_unit -> Write(data_memory -> GetRegister(data_memory -> GetRegister(stoi(_operand.substr(1, 2), &sz))));
+    if (stoi(_operand.substr(1, 2), &sz) > 0) {
+      output_unit.Write(data_memory.GetRegister(data_memory.GetRegister(stoi(_operand.substr(1, 2), &sz))));
+    } else {
+      std::cout << "Error. The " << _operator << " instruction not working properly \n";
+      program_memory.HaltPosition();
+    }
   } else {
-    output_unit -> Write(data_memory -> GetRegister(stoi(_operand.substr(1, 2), &sz)));
+    if (stoi(_operand ,&sz) > 0) {
+      output_unit.Write(data_memory.GetRegister(stoi(_operand, &sz)));
+    } else {
+      std::cout << "Error. The " << _operator << " instruction not working properly \n";
+      program_memory.HaltPosition();
+    }
   }
 }
 
@@ -192,31 +222,51 @@ void Write::Run() {
 Jump::Jump(std::string label, std::string name, std::string operand): Instruction(label, name, operand) {}
 Jump::~Jump() {}
 
-void Jump::Run(ProgramMemory& program_memory) {
-  std::string::size_type sz;
-  program_memory -> FindLabel(stoi(_operand, &sz));
+void Jump::Run(DataMemory& data_memory, InputUnit& input_unit, OutputUnit& output_unit, ProgramMemory& program_memory) {
+  std::cout << "JUMP \n";
+  if (_operand.find("=") != std::string::npos || _operand.find("*") != std::string::npos) {
+    std::cout << "Error. The " << _operator << " instruction not working properly \n";
+    program_memory.HaltPosition();
+  } else {
+    program_memory.FindLabel(_operand);
+  }
 }
 
 // Jzero
 Jzero::Jzero(std::string label, std::string name, std::string operand): Instruction(label, name, operand) {}
 Jzero::~Jzero() {}
 
-void Jzero::Run(ProgramMemory& program_memory, DataMemory& data_memory) {
-  if (data_memory -> GetAcc() == 0) program_memory -> FindLabel(stoi(_operand, &sz));
+void Jzero::Run(DataMemory& data_memory, InputUnit& input_unit, OutputUnit& output_unit, ProgramMemory& program_memory) {
+  std::cout << "JZERO \n";
+  if (_operand.find("=") != std::string::npos || _operand.find("*") != std::string::npos) {
+    std::cout << "Error. The " << _operator << " instruction not working properly \n";
+    program_memory.HaltPosition();
+  } else {
+    if (data_memory.GetAcc() == 0) {
+      program_memory.FindLabel(_operand);
+    }
+  } 
 }
 
 // Jgtz
 Jgtz::Jgtz(std::string label, std::string name, std::string operand): Instruction(label, name, operand) {}
 Jgtz::~Jgtz() {}
 
-void Jgtz::Run(ProgramMemory& program_memory, DataMemory& data_memory) {
-  if (data_memory -> GetAcc() > 0) program_memory -> FindLabel(stoi(_operand, &sz));
+void Jgtz::Run(DataMemory& data_memory, InputUnit& input_unit, OutputUnit& output_unit, ProgramMemory& program_memory) {
+  std::cout << "JGTZ \n";
+  if (_operand.find("=") != std::string::npos || _operand.find("*") != std::string::npos) {
+    std::cout << "Error. The " << _operator << " instruction not working properly \n";
+    program_memory.HaltPosition();
+  } else {
+    if (data_memory.GetAcc() > 0) program_memory.FindLabel(_operand);
+  }
 }
 
 // Halt
 Halt::Halt(std::string label, std::string name, std::string operand): Instruction(label, name, operand) {}
 Halt::~Halt() {}
 
-void Halt::Run() {
+void Halt::Run(DataMemory& data_memory, InputUnit& input_unit, OutputUnit& output_unit, ProgramMemory& program_memory) {
+  std::cout << "HALT \n";
   std::cout << "End of the program \n"; 
 }

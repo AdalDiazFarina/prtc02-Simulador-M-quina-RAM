@@ -15,6 +15,8 @@
 #include "instruction.h"
 #include <vector>
 
+class Instruction;
+
 /**
  * @brief This class is in charge of have the list of instructions and return the instruction that we need in each moment
  * @param _pointer [int] This parameter allow us to know how is the following instruction
@@ -45,6 +47,11 @@ class ProgramMemory {
      * @param label [std::string]
      */
     void FindLabel(std::string label);
+    /**
+     * @brief This method change the pointer to the halt instruction position
+     * 
+     */
+    void HaltPosition();
     /**
      * @brief Get the Next Instruction object
      * @return [Instruction] 

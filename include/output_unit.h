@@ -19,8 +19,10 @@
  */
 class OutputUnit : public Tape {
   private:
-    std::ofstream _output_file;
+    std::string _output_file;
   public: 
+    // Default constructor
+    OutputUnit();
     // Constructor
     OutputUnit(std::string output_file);
     // Destructor

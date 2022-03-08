@@ -13,12 +13,12 @@
 #include "../include/input_unit.h"
 
 // Default constructor
-InputUnit::InputUnit(): Tape();
+InputUnit::InputUnit(): Tape() {}
 /**
 * @brief Construct a new Input Unit object
-* @param tape [Tape]
+* @param vector [std::vector<int>]
 */
-InputUnit::InputUnit(std::vector<int> tape): Tape(tape);
+InputUnit::InputUnit(std::vector<int> vector): Tape(vector) {}
 // Destructor
 InputUnit::~InputUnit() {}
 
